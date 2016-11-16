@@ -6,7 +6,9 @@ LDFLAGS	+= -L.
 
 CFLAGS	+= -Iinclude
 
-SRCS	:= main.c
+SRCS	:= 	main.c \
+			client.c
+
 
 OBJS	:= $(SRCS:.c=.o)
 
