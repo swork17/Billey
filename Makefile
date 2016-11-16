@@ -6,7 +6,7 @@ LDFLAGS	+= -L.
 
 CFLAGS	+= -Iinclude
 
-SRCS	:= main.c
+SRCS	:= src/main.c
 
 OBJS	:= $(SRCS:.c=.o)
 
@@ -19,6 +19,7 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) *~
 
 fclean: clean
 	$(RM) $(NAME)
