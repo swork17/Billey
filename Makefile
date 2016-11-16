@@ -1,29 +1,17 @@
-CC	:= gcc
+CLIENT_DIR = src/client/
+SERVER_DIR = src/server/
+BIN_DIR = bin/
 
-RM	:= rm -rf
+.PHONY: project_code
 
-LDFLAGS	+= -L. 
-
-CFLAGS	+= -Iinclude
-
-SRCS	:= src/client.c
-
-OBJS	:= $(SRCS:.c=.o)
-
-NAME	:= bin/Client
-
-all: $(NAME)
-
-$(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
+all:
+	$(MAKE) -C $(CLIENT_DIR)
+	$(MAKE) -C $(SERVER_DIR)
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) *~
+	$(MAKE) -C $(CLIENT_DIR) clean
+	$(MAKE) -C $(SERVER_DIR) clean
 
-fclean: clean
-	$(RM) $(NAME)
-
-re: fclean all
-
-.PHONY: all re clean fclean
+fclean: 
+	$(MAKE) -C $(CLIENT_DIR) fclean
+	$(MAKE) -C $(SERVER_DIR) fclean
