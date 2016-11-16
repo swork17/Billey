@@ -1,12 +1,12 @@
 // Includes
 #include <stdio.h>
 #include <stdlib.h>
+#include "../../include/common.h"
 #include "../../include/client.h"
 
 int main(int argc, char **argv){
 	
 	int i_idguichet = 0; 
-	char c_guichet;
 
 	// Nombre d'argument
 	if(argc != 2)
@@ -18,15 +18,12 @@ int main(int argc, char **argv){
 	// Récupération du numéro, ex : Client 1
 	i_idguichet = atoi(argv[1]);
 
-	// Vérifie et converti le numéro du guichet par son code, ex : 1 = 'A'
-	c_guichet = convert_type_guichet(i_idguichet);
-
-	if(c_guichet == ' ')
+	if(i_idguichet == 0 || i_idguichet > 4)
 	{
-		printf("Erreur dans le fichier client.c, argument non valide !\n");
+		printf("Erreur argument passé non valide (client.c) !\n");
 		return -1;
 	}
 	
-	init_client(c_guichet);
+	init_client(i_idguichet);
 } 
 
