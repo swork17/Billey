@@ -6,12 +6,12 @@ LDFLAGS	+= -L.
 
 CFLAGS	+= -Iinclude
 
-SRCS	:=  src/main.c \
-			src/server.c
+SRCS	:=  main.c \
+			server.c
 
 OBJS	:= $(SRCS:.c=.o)
 
-NAME	:= Billey
+NAME	:= ../../bin/Server
 
 all: $(NAME)
 

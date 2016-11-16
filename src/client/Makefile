@@ -6,11 +6,11 @@ LDFLAGS	+= -L.
 
 CFLAGS	+= -Iinclude
 
-SRCS	:= src/client.c
+SRCS	:= client.c
 
 OBJS	:= $(SRCS:.c=.o)
 
-NAME	:= bin/Client
+NAME	:= ../bin/Client
 
 all: $(NAME)
 
