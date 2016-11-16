@@ -7,7 +7,8 @@ LDFLAGS	+= -L.
 CFLAGS	+= -Iinclude
 
 SRCS	:=  main.c \
-			server.c
+			server.c \
+			../common/common.c
 
 OBJS	:= $(SRCS:.c=.o)
 

@@ -6,15 +6,11 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include "../../include/common.h"
 #include "../../include/server.h"
 
 #define MAX_CLIENT 4
 
-void error(const char *msg)
-{
-    perror(msg);
-    exit(0);
-}
 
 int init_server(char *adress, char *port) {
 	int sockfd, newsockfd, _numport;
