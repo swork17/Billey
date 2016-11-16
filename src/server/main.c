@@ -3,10 +3,5 @@
 #include <stdlib.h>
 
 int main() {
-
-	
-
-
-
-
-} // Fin main
+	init_server(); 
+}
