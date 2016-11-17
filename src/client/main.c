@@ -11,8 +11,7 @@ int main(int argc, char **argv){
 	// Nombre d'argument
 	if(argc != 2)
 	{
-		printf("Erreur dans le fichier client.c, problème au niveau du nombre d'arguments !\n");
-		return -1;
+		show_error("Erreur dans le fichier client.c, problème au niveau du nombre d'arguments !");
 	}
 
 	// Récupération du numéro, ex : Client 1
@@ -20,8 +19,7 @@ int main(int argc, char **argv){
 
 	if(i_idguichet == 0 || i_idguichet > 4)
 	{
-		printf("Erreur argument passé non valide (client.c) !\n");
-		return -1;
+		show_error("Erreur argument passé non valide (client.c) !");
 	}
 	
 	init_client(i_idguichet);
