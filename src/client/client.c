@@ -108,6 +108,7 @@ int connect_server(int i_guichet){
    
   // printf("\nRéponse du serveur :");
 
+  return sock;
 } // Fin connect_server
 
 
