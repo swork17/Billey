@@ -1,63 +1,74 @@
-#include <stdlib.h>
+
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
+#include <stdlib.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include "../../include/common.h"
+#include <arpa/inet.h> 
+#include <unistd.h>   
+#include <pthread.h> 
 #include "../../include/server.h"
 
-#define MAX_CLIENT 4
 
+int    run_server()
+{
+    int socket_desc , client_sock , c , *new_sock;
+    struct sockaddr_in server , client;
+    socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+    if (socket_desc == -1)
+        printf("Creation socket impossible ..");
+    puts("Socket OK");
 
-int init_server(char *adress, char *port) {
-	int sockfd, newsockfd, _numport;
-    socklen_t clilen;
-    char buffer[256];
-    struct sockaddr_in serv_addr, cli_addr;
-    int n;
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons(4242);
 
-    _numport = atoi(port);
-	printf("Adress : %s\nPort : %d\n\n", adress, _numport);
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-         return -1;
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(_numport);
-     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        error("LISTEN ERROR");
-    listen(sockfd, 5);
-    clilen = sizeof(cli_addr);
-
-   int pid;
-   int client = 0;
-    while (1) {
-         newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-         client += 1; 
-         if (newsockfd < 0)
-                error("SOCK ERROR");
-         pid = fork();
-         if (pid < 0) 
-              error("PID ERROR");
-         if (pid == 0) {
-            close(sockfd);
-            bzero(buffer, 256);
-            n = read(newsockfd, buffer, 255);
-            if (n < 0)
-                error("READ ERROR");
-            printf("Client %d :(%d) %s\n", client, pid, buffer);
-            n = write(newsockfd, "I got your message", 18);
-            if (n < 0)
-                 error("WRITE ERROR");
-            close(newsockfd);
-          }
-          else
-             close(newsockfd);
+    if(bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
+    {
+        perror("bind Error");
+        return 1;
     }
+    puts("bind OK");
+    listen(socket_desc , 3);
+    puts("En attente de connections .. ");
+    c = sizeof(struct sockaddr_in);
 
+        c=sizeof(struct sockaddr_in);
+       while(client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c))
+       {
+            puts("Connection OK");
+            pthread_t sniffer_thread;
+            new_sock = malloc(1);
+            *new_sock = client_sock;
+            if(pthread_create( &sniffer_thread , NULL ,  connection_handler , (void*) new_sock) < 0)
+            {
+                perror("Impossible de créer la thread");
+                return 1;
+            }
+            puts("Handler assigné");
+        }
+    if (client_sock < 0)
+    {
+        perror("accept error");
+        return 1;
+    }
+    return 0;
+}
+
+void    *connection_handler(void *socket_desc)
+{
+    int sock = *(int*)socket_desc;
+    int n;
+    char sendBuff[100], client_message[2000];
+
+    while((n = recv(sock,client_message,2000,0))>0) {
+        send(sock,client_message,n,0);
+        printf("Message %s\n", client_message);
+    }
+        
+    close(sock);
+    if(n == 0)
+        puts("Client Disconnected");
+    else
+        perror("recv error");
     return 0;
 }

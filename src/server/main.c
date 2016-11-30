@@ -1,11 +1,17 @@
 // Includes
 #include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 #include "../../include/server.h"
 
 #define RED   "\x1B[31m"
 #define RESET "\x1B[0m"
-
 
 void start_server() {
 	system("clear");
@@ -19,8 +25,7 @@ void start_server() {
 int	main(int argc, char **argv) {
 	start_server();
 	if (argc == 3) {
-		if (init_server(argv[1], argv[2]) == -1)
-			printf(RED "Erreur d'initialisation server\n" RESET);
+		run_server();
 	}
 	else
 		printf(RED "Erreur d'arguments..\n" RESET);
