@@ -2,6 +2,10 @@ LE TODO
 
 
 Fabien : 
+	- Gérer la saisie de l'utilisateur (saisie de la catégorie, boucle infini si saisie de character)
+	- Récupération de l'adresse ip
+	- Text to asscii (modification du titre de la fenetre en mode trop swag)
+
 
 
 
