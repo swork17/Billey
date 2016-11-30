@@ -25,7 +25,7 @@ void start_server() {
 int	main(int argc, char **argv) {
 	start_server();
 	if (argc == 3) {
-		run_server();
+		run_server(atoi(argv[2]));
 	}
 	else
 		printf(RED "Erreur d'arguments..\n" RESET);
