@@ -3,6 +3,6 @@
 
 	void init_client(int i_guichet);
 	int connect_server(int i_guichet);
-	char convert_type_guichet(int i_num);
+	char * get_ip();
 
 #endif /* !CLIENT_H */
