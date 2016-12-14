@@ -60,16 +60,16 @@ void    *connection_handler(void *socket_desc)
     t_info *clientInfo = malloc(sizeof(t_info));
 
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
-        send(sock, client_message, n, 0);
+        //send(sock, client_message, n, 0);
         parseClientInfo(client_message, clientInfo);
         printf("Adresse du client: %s\n", clientInfo->ipAddr);
         printf("Numero du guichet: %d\n", clientInfo->numClient);
         if (clientInfo->ipAddr != "" && clientInfo->numClient != 0)
-            send(sock, "1", n, 0);
+            client_message = "1";
         else
-            send(sock, "0", n, 0);
+            client_message = "0";
+        send(sock, client_message, n, 0);
     }
-
 
     close(sock);
     if (n == 0)
