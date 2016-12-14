@@ -2,7 +2,7 @@ CC	:= gcc
 
 RM	:= rm -rf
 
-LDFLAGS	+= -L.
+LDFLAGS	+= -L. -lpthread
 
 CFLAGS	+= -Iinclude
 
