@@ -64,10 +64,10 @@ void    *connection_handler(void *socket_desc)
         parseClientInfo(client_message, clientInfo);
         printf("Adresse du client: %s\n", clientInfo->ipAddr);
         printf("Numero du guichet: %d\n", clientInfo->numClient);
-        if (clientInfo->ipAddr != "" && clientInfo->numClient != 0)
-            client_message = "1";
+        if (clientInfo->numClient != 0)
+            strcpy(client_message, "1");
         else
-            client_message = "0";
+            strcpy(client_message, "0");
         send(sock, client_message, n, 0);
     }
 
