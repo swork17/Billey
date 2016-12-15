@@ -34,6 +34,7 @@ int    run_server(int port)
     while((client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c)))
        {
             puts("Connection OK");
+            printf("%s\n", inet_ntoa(client.sin_addr));
             pthread_t sniffer_thread;
             new_sock = malloc(1);
             *new_sock = client_sock;
@@ -59,16 +60,14 @@ void    *connection_handler(void *socket_desc)
     char sendBuff[100], client_message[2000];
     t_info *clientInfo = malloc(sizeof(t_info));
 
+
+
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
-        //send(sock, client_message, n, 0);
         parseClientInfo(client_message, clientInfo);
         printf("Adresse du client: %s\n", clientInfo->ipAddr);
         printf("Numero du guichet: %d\n", clientInfo->numClient);
-        if (clientInfo->numClient != 0)
-            strcpy(client_message, "1");
-        else
-            strcpy(client_message, "0");
-        send(sock, client_message, n, 0);
+        clientInfo->numClient != 0 ? strcpy(sendBuff, "1") : strcpy(sendBuff, "0");
+        send(sock, sendBuff, n, 0);
     }
 
     close(sock);
