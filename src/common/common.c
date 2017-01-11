@@ -9,9 +9,13 @@
 #define RED "\x1B[41m"
 #define RESET "\x1B[0m"
 
-void show_error(const char *msg)
+void show_msg(int type, const char *msg)
 {
-	printf(RED "%s" RESET, msg);
+    if(type == 0)
+    	printf(RED "%s" RESET, msg);
+    else
+        printf(GREEN "%s" RESET, msg);
+    
 	printf("\n");
 	exit(0);
 }

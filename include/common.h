@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 # define COMMON_H
 
-void show_error(const char *msg);
+void show_msg(int type, const char *msg);
 void error(const char *msg);
 int split (char *str, char c, char ***arr);
 
