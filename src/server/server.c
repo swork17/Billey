@@ -26,7 +26,6 @@ int    run_server(int port)
         perror("bind Error");
         return 1;
     }
-
     puts("bind OK");
     listen(socket_desc , 3);
     puts("En attente de connections .. ");
@@ -68,6 +67,7 @@ void    *connection_handler(void *socket_desc)
         printf("Numero du guichet: %d\n", clientInfo->numClient);
         clientInfo->numClient != 0 ? strcpy(sendBuff, "1") : strcpy(sendBuff, "0");
         send(sock, sendBuff, n, 0);
+        
     }
 
     close(sock);
