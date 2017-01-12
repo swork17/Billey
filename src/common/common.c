@@ -1,6 +1,7 @@
 //Common Function
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "../../include/common.h"
 
@@ -8,6 +9,8 @@
 #define GREEN "\x1B[42m"
 #define RED "\x1B[41m"
 #define RESET "\x1B[0m"
+
+#define ZONES 4
 
 void show_error(const char *msg)
 {
@@ -81,3 +84,57 @@ int split (char *str, char c, char ***arr)
     }
     return count;
 }
+
+/*char **splitMyConf(char *conf) {
+    char delim[] = ";";
+    char *token;
+    char tabConf[4][8];
+    int i = 0;
+    int j;
+    //char *conf_cpy = strcpy(conf_cpy, conf);
+
+    for (token = strtok(conf, delim); token; token = strtok(NULL, delim))
+    {
+        //printf("%s\n", token);
+        char _delim[] = ":";
+        //printf("First token=%s\n", token);
+        strcpy(tabConf[i], token);
+        printf("tabConf %d -> %s\n", i, tabConf[i]);
+        i++;
+        //second_split(token, conf, _delim);
+    }
+    return tabConf;
+}*/
+
+char *append(const char *s, char c) {
+    int len = strlen(s);
+    char buf[len+2];
+    strcpy(buf, s);
+    buf[len] = c;
+    buf[len + 1] = 0;
+    return strdup(buf);
+}
+
+/*void getMyConf(char *path_file) {
+    int c;
+    FILE *file;
+    file = fopen(path_file, "r");
+    char *all_conf = malloc(sizeof(char*) + 1);
+    char **tabConf;
+
+    if (file) {
+        while ((c = getc(file)) != EOF) {
+            all_conf = append(all_conf, c);
+        }
+        //printf("My conf line : %s\n =============\n", all_conf);
+        fclose(file);
+        tabConf = splitMyConf(all_conf);
+        printf("Places totales du terrain : \n");
+        printf("\t\tZone A -> %s\n", tabConf[0]);
+        printf("\t\tZone B -> %s\n", tabConf[1]);
+        printf("\t\tZone C -> %s\n", tabConf[2]);
+        printf("\t\tZone D -> %s\n", tabConf[3]);
+
+
+    }
+}*/

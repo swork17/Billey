@@ -10,6 +10,8 @@
 
 int    run_server(int port)
 {
+    //getMyConf("../conf/places.cnf");
+    //return 0;
     int socket_desc , client_sock , c , *new_sock;
     struct sockaddr_in server , client;
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -59,15 +61,12 @@ void    *connection_handler(void *socket_desc)
     char sendBuff[100], client_message[2000];
     t_info *clientInfo = malloc(sizeof(t_info));
 
-
-
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
         parseClientInfo(client_message, clientInfo);
         printf("Adresse du client: %s\n", clientInfo->ipAddr);
         printf("Numero du guichet: %d\n", clientInfo->numClient);
         clientInfo->numClient != 0 ? strcpy(sendBuff, "1") : strcpy(sendBuff, "0");
         send(sock, sendBuff, n, 0);
-        
     }
 
     close(sock);
@@ -93,6 +92,3 @@ void parseClientInfo(char *message, t_info *clientInfo) {
     strcpy(clientInfo->ipAddr, value[0]);
     clientInfo->numClient = atoi(value[1]);
 }
-
-
-

@@ -2,13 +2,13 @@ CC	:= gcc
 
 RM	:= rm -rf
 
-LDFLAGS	+= -L. -lpthread
+LDFLAGS	+= -L. -lpthread -ggdb
 
-CFLAGS	+= -Iinclude
+CFLAGS	+= -Iinclude -Wimplicit-function-declaration
 
 SRCS	:=  	main.c \
-		server.c \
-		../common/common.c
+				server.c \
+				../common/common.c
 
 OBJS	:= $(SRCS:.c=.o)
 
