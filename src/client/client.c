@@ -14,8 +14,9 @@ void init_client(int i_guichet){
 
   int i_categ;
   int i_nbplace;
+  int i_rep;
   char c_zone;
-  char msg[40];
+  char msg[40]= "";
   char buffer[60];
   bool f_saisie = false;
 
@@ -103,38 +104,32 @@ void init_client(int i_guichet){
   } while (f_saisie == false);
 
 
-  printf("Nb de places : %d\n", i_nbplace);
-
-
   msg[0] = c_zone;  
   msg[1] = ' ';
 
   sprintf(buffer, "%d", i_nbplace);
-
-  //buffer = (char*)malloc(sizeof(i_nbplace) + 1);
-
-  printf("Buffer : %s\n", buffer);
-
   strcat(msg, buffer);
-  //strcat(msg, i_nbplace);
 
-  printf("msg : %s\n", msg);
+  printf("Message : %s\n", msg);
 
   // Envoie de la zone et du nombre de place souhaité
-  send_msg(socket, msg);
+  i_rep = send_msg(socket, msg);
 
-/*
-
-  char w_categ[1];
-  sprintf(w_categ, "%d", i_choix);
-
-  int i_reponse= send_msg(socket, c_zone);
-*/
-
+  switch (i_rep)
+  {
+    case 0:
+      show_msg(0, "Commande refusé, plus de place disponible dans cette zone !");
+      break;
+    case 1:
+      show_msg(1, "Commande validée !");
+      break;
+  }
 
   printf("\n");
 
   // Fermeture de la socket
   close(socket);
 
+
+  exit(0);
 } // Fin init_client
