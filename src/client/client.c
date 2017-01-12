@@ -12,12 +12,12 @@
 
 void init_client(int i_guichet){
 
-  int i_choix = 0;
+  int i_categ;
+  int i_nbplace;
   char c_zone;
-  char *msg;
-  bool f_saisie_categ = false;
-  bool f_saisie_zone  = false;
-
+  char msg[40];
+  char buffer[60];
+  bool f_saisie = false;
 
   system("clear");
 
@@ -34,9 +34,9 @@ void init_client(int i_guichet){
     printf("Veuillez sélectionner la catégorie qui vous correspond : ");
     
     // Récupération de la saisie et vérification
-    if( scanf("%d", &i_choix) == 1){
-      if(i_choix > 0 && i_choix < 4)
-        f_saisie_categ = true;
+    if( scanf("%d", &i_categ) == 1){
+      if(i_categ > 0 && i_categ < 4)
+        f_saisie = true;
       else
         system("clear");
     }
@@ -46,11 +46,13 @@ void init_client(int i_guichet){
      scanf("%*s"); // Ignore la valeur saisie
     }
     
-  } while ( f_saisie_categ == false );
+  } while ( f_saisie == false );
 
+
+  f_saisie = false;
 
   // Dans le cas des supporters locaux, deux zones possibles
-  if(i_choix == 1)
+  if(i_categ == 1)
   {
     do
     {
@@ -62,31 +64,65 @@ void init_client(int i_guichet){
 
       if(c_zone == 'A' || c_zone == 'B')
       {
-        f_saisie_zone = true;
+        f_saisie = true;
       }
       else
       {
         system("clear");
       }
 
-    } while (f_saisie_zone == false);
+    } while (f_saisie == false);
   }
 
-  if(i_choix == 2)
+  if(i_categ == 2)
     c_zone = 'C';
 
 
-  if(i_choix == 3)
+  if(i_categ == 3)
     c_zone = 'D';
 
-  printf("Combien de place souhaitez-vous dans la zone %c ?", c_zone);
+
+  f_saisie = false;
+
+  do
+  {
+    printf("Combien de place souhaitez-vous dans la zone %c ? ", c_zone);
+    scanf("%d", &i_nbplace);
+
+    if(i_nbplace > 0)
+    {
+      f_saisie = true;
+    }
+    else
+    {
+      system("clear");
+
+      scanf("%*s"); // Ignore la valeur saisie
+    }
+
+  } while (f_saisie == false);
 
 
+  printf("Nb de places : %d\n", i_nbplace);
 
-/*
+
+  msg[0] = c_zone;  
+  msg[1] = ' ';
+
+  sprintf(buffer, "%d", i_nbplace);
+
+  //buffer = (char*)malloc(sizeof(i_nbplace) + 1);
+
+  printf("Buffer : %s\n", buffer);
+
+  strcat(msg, buffer);
+  //strcat(msg, i_nbplace);
+
+  printf("msg : %s\n", msg);
+
   // Envoie de la zone et du nombre de place souhaité
-  send_msg(sock, msg);
-*/
+  send_msg(socket, msg);
+
 /*
 
   char w_categ[1];
