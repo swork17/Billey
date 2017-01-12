@@ -1,26 +1,23 @@
 // Includes
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <netinet/in.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <sys/ioctl.h>
-#include <net/if.h>
 #include <unistd.h>
-#include <errno.h> 
-#include <netdb.h>
-#include <ifaddrs.h>
 #include "../../include/common.h"
 #include "../../include/client.h"
 
+
 void init_client(int i_guichet){
 
-  int i_choix = 0;
+  int i_categ;
+  int i_nbplace;
   char c_zone;
-  bool f_saisie_categ = false;
+  char msg[40];
+  char buffer[60];
+  bool f_saisie = false;
 
   system("clear");
 
@@ -30,16 +27,16 @@ void init_client(int i_guichet){
 
   do
   {
-    printf("\nListe des catégories\n");
+    printf("\nListe des catégories :\n");
     printf("1) Spectateur de l'équipe locale\n"); 
     printf("2) Spectateur de l'équipe visiteur\n"); 
     printf("3) Un Officiel\n"); 
     printf("Veuillez sélectionner la catégorie qui vous correspond : ");
     
     // Récupération de la saisie et vérification
-    if( scanf("%d", &i_choix) == 1){
-      if(i_choix > 0 && i_choix < 4)
-        f_saisie_categ = true;
+    if( scanf("%d", &i_categ) == 1){
+      if(i_categ > 0 && i_categ < 4)
+        f_saisie = true;
       else
         system("clear");
     }
@@ -49,72 +46,95 @@ void init_client(int i_guichet){
      scanf("%*s"); // Ignore la valeur saisie
     }
     
-  } while ( f_saisie_categ == false );
+  } while ( f_saisie == false );
 
 
-  printf("Choix : %i\n", i_choix);
+  f_saisie = false;
+
+  // Dans le cas des supporters locaux, deux zones possibles
+  if(i_categ == 1)
+  {
+    do
+    {
+      printf("Deux zones possibles pour les supporters locaux, zone A ou zone B ? ");
+      scanf(" %c", &c_zone);
+
+      if(c_zone == 'a') c_zone = 'A';
+      if(c_zone == 'b') c_zone = 'B';
+
+      if(c_zone == 'A' || c_zone == 'B')
+      {
+        f_saisie = true;
+      }
+      else
+      {
+        system("clear");
+      }
+
+    } while (f_saisie == false);
+  }
+
+  if(i_categ == 2)
+    c_zone = 'C';
+
+
+  if(i_categ == 3)
+    c_zone = 'D';
+
+
+  f_saisie = false;
+
+  do
+  {
+    printf("Combien de place souhaitez-vous dans la zone %c ? ", c_zone);
+    scanf("%d", &i_nbplace);
+
+    if(i_nbplace > 0)
+    {
+      f_saisie = true;
+    }
+    else
+    {
+      system("clear");
+
+      scanf("%*s"); // Ignore la valeur saisie
+    }
+
+  } while (f_saisie == false);
+
+
+  printf("Nb de places : %d\n", i_nbplace);
+
+
+  msg[0] = c_zone;  
+  msg[1] = ' ';
+
+  sprintf(buffer, "%d", i_nbplace);
+
+  //buffer = (char*)malloc(sizeof(i_nbplace) + 1);
+
+  printf("Buffer : %s\n", buffer);
+
+  strcat(msg, buffer);
+  //strcat(msg, i_nbplace);
+
+  printf("msg : %s\n", msg);
+
+  // Envoie de la zone et du nombre de place souhaité
+  send_msg(socket, msg);
+
+/*
+
+  char w_categ[1];
+  sprintf(w_categ, "%d", i_choix);
+
+  int i_reponse= send_msg(socket, c_zone);
+*/
+
+
+  printf("\n");
 
   // Fermeture de la socket
   close(socket);
 
-  while(1);
-
-
 } // Fin init_client
-
-int connect_server(int i_guichet){
-
-  struct sockaddr_in server;
-  char message[20] = "2 ";
-  
-  char w_guichet[5];
-  sprintf(w_guichet, "%d", i_guichet);
-  strcat(message, w_guichet);
-
-  char server_reply[2000];
-   
-  // Création de la socket
-  int sock = socket(AF_INET , SOCK_STREAM , 0);
-  if (sock == -1)
-  {
-      show_error("Impossible de créer la socket !");
-  }
-
-  // Serveur local
-  server.sin_addr.s_addr = inet_addr("127.0.0.1");
-  // Serveur distant
-  // server.sin_addr.s_addr = inet_addr("37.59.36.109");
-  server.sin_family = AF_INET;
-  server.sin_port = htons( 4245 );
-
-  // Connexion au serveur
-  if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
-  {
-      show_error("Impossible de se connecter au serveur !");
-  }
-        
-  // Garde la connexion avec le serveur
-  printf("Envoi du message : '%s'\n", message);
-   
-  // Envoie des données au serveurs, adresse ip + numéro client
-  if( send(sock , message , strlen(message) , 0) < 0)
-  {
-      show_error("Echec de l'envoi au serveur !");
-  }
-   
-  // Réception de la réponse du serveur
-  if( recv(sock , server_reply , 2000 , 0) < 0)
-  {
-      show_error("Pas de réponse du serveur !");
-  }
-
-  // Erreur si le serveur retourne 0
-   if(strcmp(server_reply, "0") == 0)
-   {
-      close(sock);
-      show_error("Impossible serveur occupé !");
-   }
-
-  return sock;
-} // Fin connect_server
-

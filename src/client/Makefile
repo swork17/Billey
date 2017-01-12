@@ -8,6 +8,7 @@ CFLAGS	+= -Iinclude
 
 SRCS	:= 	main.c \
 			client.c \
+			socket.c \
 			../common/common.c
 
 
