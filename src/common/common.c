@@ -10,13 +10,9 @@
 #define RED "\x1B[41m"
 #define RESET "\x1B[0m"
 
-<<<<<<< HEAD
 #define ZONES 4
 
-void show_error(const char *msg)
-=======
 void show_msg(int type, const char *msg)
->>>>>>> refs/remotes/origin/master
 {
     if(type == 0)
     	printf(RED "%s" RESET, msg);
