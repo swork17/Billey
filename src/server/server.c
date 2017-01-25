@@ -8,6 +8,12 @@
 #include "../../include/server.h"
 #include "../../include/common.h"
 
+int A = 10;
+int B = 10;
+int C = 5;
+int D = 7;
+
+
 int    run_server(int port)
 {
     //getMyConf("../conf/places.cnf");
@@ -60,15 +66,56 @@ void    *connection_handler(void *socket_desc)
     int n;
     char sendBuff[100], client_message[2000];
     t_info *clientInfo = malloc(sizeof(t_info));
+    t_placeAttricut *attribut = malloc(sizeof(t_placeAttricut));
 
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
         parseClientInfo(client_message, clientInfo);
-        printf("Adresse du client: %s\n", clientInfo->ipAddr);
         printf("Numero du guichet: %d\n", clientInfo->numClient);
         clientInfo->numClient != 0 ? strcpy(sendBuff, "1") : strcpy(sendBuff, "0");
         send(sock, sendBuff, n, 0);
+        break;
     }
 
+    while ((n = recv(sock,client_message, 2000, 0)) > 0) {
+        char *ret_msg[256];
+        printf("Le guitchet n°%d demande : %s\n", clientInfo->numClient, client_message);
+        parsePlaceAttribut(client_message, attribut);
+        //printf("Zone %s - %d places en moins\n", attribut->idZone, attribut->nbPlaces);
+        if (attribut->idZone[0] == 'A') {
+            if ((A - attribut->nbPlaces) >= 0){
+                A -= attribut->nbPlaces;
+                send(sock,  A, n, 0);
+            }
+            else
+                send(sock, "0 Pas assez de places..", n, 0);
+        }
+        else if (attribut->idZone[0] == 'B'){
+            if ((B - attribut->nbPlaces) >= 0){
+                B -= attribut->nbPlaces;
+                send(sock,  B, n, 0);
+            } else
+                send(sock, "0 Pas assez de places..", n, 0);
+            
+        }
+        else if (attribut->idZone[0] == 'C'){
+            if ((C - attribut->nbPlaces) >= 0){
+                C -= attribut->nbPlaces;
+                send(sock,  C, n, 0);
+            } else
+                send(sock, "0 Pas assez de places..", n, 0);
+            
+        }
+        else if (attribut->idZone[0] == 'D'){
+            if ((D - attribut->nbPlaces) >= 0) {
+                D -= attribut->nbPlaces;
+                send(sock,  D, n, 0);
+            } else
+                send(sock, "0 Pas assez de places..", n, 0);
+        }
+
+        printf("A : %d - B : %d - C : %d - D : %d \n", A, B, C, D);
+
+    }
     close(sock);
     if (n == 0)
         puts("Client Disconnected");
@@ -77,7 +124,19 @@ void    *connection_handler(void *socket_desc)
     return 0;
 }
 
-char **splitIt(char *string, t_info *clientInfo) {
+void parsePlaceAttribut(char *message, t_placeAttricut *attribut) {
+
+    char **value = NULL;
+    value = splitIt(message);
+
+    strcpy(attribut->idZone, value[0]);
+    attribut->nbPlaces = atoi(value[1]);
+
+    
+
+}
+
+char **splitIt(char *string) {
     int i;
     int c = 0;
     char **arr = NULL;
@@ -88,7 +147,7 @@ char **splitIt(char *string, t_info *clientInfo) {
 
 void parseClientInfo(char *message, t_info *clientInfo) {
     char **value = NULL;
-    value = splitIt(message, clientInfo);
+    value = splitIt(message);
     strcpy(clientInfo->ipAddr, value[0]);
     clientInfo->numClient = atoi(value[1]);
 }
