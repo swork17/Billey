@@ -13,6 +13,7 @@
 #define ip_server "127.0.0.1"
 // #define ip_server "7.59.36.109"
 
+#define port 4245
 
 // Lance la connexion au serveur
 int connect_server(int i_guichet){
@@ -33,7 +34,7 @@ int connect_server(int i_guichet){
 
   server.sin_addr.s_addr = inet_addr(ip_server);
   server.sin_family = AF_INET;
-  server.sin_port = htons( 4245 );
+  server.sin_port = htons( port );
 
   // Connexion au serveur
   if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
@@ -49,9 +50,9 @@ int connect_server(int i_guichet){
 
 
 // Envoi un message au serveur et récupère sa réponse
-int send_msg(int sock, char* message){
+char* send_msg(int sock, char* message){
 
-  char server_reply[1024];
+  char *server_reply = malloc(sizeof(char*) + 1);
 
   // Envoie des données au serveurs, adresse ip + numéro client
   if( send(sock , message , strlen(message) , 0) < 0)
@@ -67,12 +68,13 @@ int send_msg(int sock, char* message){
       show_msg(0, "Pas de réponse du serveur !");
   }
 
-  // Erreur si le serveur retourne 0
+  // Erreur si le serveur  retourne 0
    if(strcmp(server_reply, "0") == 0)
    {
       close(sock);
       show_msg(0, "Impossible serveur occupé !");
    }
 
-  return atoi(server_reply);
+   return server_reply;
+
 } // Fin send_msg
