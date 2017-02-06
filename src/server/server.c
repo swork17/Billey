@@ -8,7 +8,7 @@
 #include "../../include/server.h"
 #include "../../include/common.h"
 
-int A = 10;
+int A = 2500;
 int B = 10;
 int C = 5;
 int D = 7;
@@ -89,7 +89,7 @@ void    *connection_handler(void *socket_desc)
                 send(sock, str, n, 0);
             }
             else
-                send(sock, "0-1", n, 0);
+                send(sock, "0 -1", n, 0);
         }
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
@@ -98,7 +98,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", B);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0-1", n, 0);
+                send(sock, "0 -1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'C'){
@@ -108,7 +108,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0-1", n, 0);
+                send(sock, "0 -1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'D'){
@@ -118,7 +118,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0-1", n, 0);
+                send(sock, "0 -1", n, 0);
         }
         printf("A : %d - B : %d - C : %d - D : %d \n", A, B, C, D);
     }
