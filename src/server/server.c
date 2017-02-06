@@ -143,14 +143,6 @@ void parsePlaceAttribut(char *message, t_placeAttricut *attribut) {
     attribut->nbPlaces = atoi(value[1]);
 }
 
-char **splitIt(char *string) {
-    int i;
-    int c = 0;
-    char **arr = NULL;
-
-    c = split(string, ' ', &arr);
-    return (arr);
-}
 
 void parseClientInfo(char *message, t_info *clientInfo) {
     char **value = NULL;

@@ -119,6 +119,15 @@ char *append(const char *s, char c) {
     return strdup(buf);
 }
 
+char **splitIt(char *string) {
+    int i;
+    int c = 0;
+    char **arr = NULL;
+
+    c = split(string, ' ', &arr);
+    return (arr);
+}
+
 /*void getMyConf(char *path_file) {
     int c;
     FILE *file;

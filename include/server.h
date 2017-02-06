@@ -15,7 +15,6 @@
 	int run_server();
 	void *connection_handler(void *);
 	void parseClientInfo(char *message, t_info *clientInfo);
-	char **splitIt(char *string);
 	void parsePlaceAttribut(char *message, t_placeAttricut *attribut);
 
 #endif /* !SERVER_H */
