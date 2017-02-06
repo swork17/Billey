@@ -23,7 +23,7 @@ int    run_server(int port)
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
     if (socket_desc == -1)
         printf("Creation socket impossible ..");
-    puts("Socket OK");
+    puts("--> Socket OK");
 
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
@@ -34,9 +34,9 @@ int    run_server(int port)
         perror("bind Error");
         return 1;
     }
-    puts("bind OK");
+    puts("----> bind OK");
     listen(socket_desc , 3);
-    puts("En attente de connections .. ");
+    puts("---->En attente de connections .. ");
     c = sizeof(struct sockaddr_in);
     while((client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c)))
        {
@@ -50,7 +50,7 @@ int    run_server(int port)
                 perror("Impossible de créer la thread");
                 return 1;
             }
-            puts("Handler assigné");
+            puts("----->Handler assigné");
         }
     if (client_sock < 0)
     {
@@ -80,9 +80,7 @@ void    *connection_handler(void *socket_desc)
         char *ret_msg[256];
         printf("Le guitchet n°%d demande : %s\n", clientInfo->numClient, client_message);
         parsePlaceAttribut(client_message, attribut);
-        //printf("Zone %s - %d places en moins\n", attribut->idZone, attribut->nbPlaces);
 
-        
         if (attribut->idZone[0] == 'A') {
             if ((A - attribut->nbPlaces) >= 0){
                 A -= attribut->nbPlaces;
@@ -91,7 +89,7 @@ void    *connection_handler(void *socket_desc)
                 send(sock, str, n, 0);
             }
             else
-                send(sock, "0 Pas assez de places..", n, 0);
+                send(sock, "0-1", n, 0);
         }
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
@@ -100,7 +98,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", B);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 Pas assez de places..", n, 0);
+                send(sock, "0-1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'C'){
@@ -110,7 +108,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 Pas assez de places..", n, 0);
+                send(sock, "0-1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'D'){
@@ -120,11 +118,9 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 Pas assez de places..", n, 0);
+                send(sock, "0-1", n, 0);
         }
-
         printf("A : %d - B : %d - C : %d - D : %d \n", A, B, C, D);
-
     }
     close(sock);
     if (n == 0)
@@ -142,7 +138,6 @@ void parsePlaceAttribut(char *message, t_placeAttricut *attribut) {
     strcpy(attribut->idZone, value[0]);
     attribut->nbPlaces = atoi(value[1]);
 }
-
 
 void parseClientInfo(char *message, t_info *clientInfo) {
     char **value = NULL;
