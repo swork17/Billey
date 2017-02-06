@@ -81,10 +81,14 @@ void    *connection_handler(void *socket_desc)
         printf("Le guitchet n°%d demande : %s\n", clientInfo->numClient, client_message);
         parsePlaceAttribut(client_message, attribut);
         //printf("Zone %s - %d places en moins\n", attribut->idZone, attribut->nbPlaces);
+
+        
         if (attribut->idZone[0] == 'A') {
             if ((A - attribut->nbPlaces) >= 0){
                 A -= attribut->nbPlaces;
-                send(sock,  A, n, 0);
+                char str[15];
+                sprintf(str, "%d", A);
+                send(sock, str, n, 0);
             }
             else
                 send(sock, "0 Pas assez de places..", n, 0);
@@ -92,7 +96,9 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
                 B -= attribut->nbPlaces;
-                send(sock,  B, n, 0);
+                char str[15];
+                sprintf(str, "%d", B);
+                send(sock, str, n, 0);
             } else
                 send(sock, "0 Pas assez de places..", n, 0);
             
@@ -100,7 +106,9 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'C'){
             if ((C - attribut->nbPlaces) >= 0){
                 C -= attribut->nbPlaces;
-                send(sock,  C, n, 0);
+                char str[15];
+                sprintf(str, "%d", C);
+                send(sock, str, n, 0);
             } else
                 send(sock, "0 Pas assez de places..", n, 0);
             
@@ -108,7 +116,9 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'D'){
             if ((D - attribut->nbPlaces) >= 0) {
                 D -= attribut->nbPlaces;
-                send(sock,  D, n, 0);
+                char str[15];
+                sprintf(str, "%d", C);
+                send(sock, str, n, 0);
             } else
                 send(sock, "0 Pas assez de places..", n, 0);
         }
@@ -131,9 +141,6 @@ void parsePlaceAttribut(char *message, t_placeAttricut *attribut) {
 
     strcpy(attribut->idZone, value[0]);
     attribut->nbPlaces = atoi(value[1]);
-
-    
-
 }
 
 char **splitIt(char *string) {

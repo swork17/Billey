@@ -29,7 +29,7 @@ void error(const char *msg)
     exit(0);
 }
 
-int split (char *str, char c, char ***arr)
+int split(char *str, char c, char ***arr)
 {
     int count = 1;
     int token_len = 1;
