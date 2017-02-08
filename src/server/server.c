@@ -83,8 +83,9 @@ void    *connection_handler(void *socket_desc)
         if (attribut->idZone[0] == 'A') {
             if ((A - attribut->nbPlaces) >= 0){
                 A -= attribut->nbPlaces;
-                char str[15];
+                char str[256];
                 sprintf(str, "%d", A);
+                printf("____%s\n", str);
                 send(sock, str, n, 0);
             }
             else 
@@ -93,7 +94,7 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
                 B -= attribut->nbPlaces;
-                char str[15];
+                char str[256];
                 sprintf(str, "%d", B);
                 send(sock, str, n, 0);
             } else
@@ -103,7 +104,7 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'C'){
             if ((C - attribut->nbPlaces) >= 0){
                 C -= attribut->nbPlaces;
-                char str[15];
+                char str[256];
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
@@ -113,7 +114,7 @@ void    *connection_handler(void *socket_desc)
         else if (attribut->idZone[0] == 'D'){
             if ((D - attribut->nbPlaces) >= 0) {
                 D -= attribut->nbPlaces;
-                char str[15];
+                char str[256];
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
