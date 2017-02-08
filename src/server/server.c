@@ -39,19 +39,19 @@ int    run_server(int port)
     puts("-->En attente de connections .. ");
     c = sizeof(struct sockaddr_in);
     while((client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c)))
-       {
-            puts("Connection OK");
-            printf("%s\n", inet_ntoa(client.sin_addr));
-            pthread_t sniffer_thread;
-            new_sock = malloc(1);
-            *new_sock = client_sock;
-            if (pthread_create(&sniffer_thread, NULL,  connection_handler, (void*) new_sock) < 0)
-            {
-                perror("Impossible de créer la thread");
-                return 1;
-            }
-            puts("-->Handler assigné");
+    {
+        puts("Connection OK");
+        printf("%s\n", inet_ntoa(client.sin_addr));
+        pthread_t sniffer_thread;
+        new_sock = malloc(1);
+        *new_sock = client_sock;
+        if (pthread_create(&sniffer_thread, NULL,  connection_handler, (void*) new_sock) < 0)
+        {
+            perror("Impossible de créer la thread");
+            return 1;
         }
+        puts("-->Handler assigné");
+    }
     if (client_sock < 0)
     {
         perror("-->accept error");
@@ -98,7 +98,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", B);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 -1", n, 0);
+            send(sock, "0 -1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'C'){
@@ -108,7 +108,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 -1", n, 0);
+            send(sock, "0 -1", n, 0);
             
         }
         else if (attribut->idZone[0] == 'D'){
@@ -118,7 +118,7 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", C);
                 send(sock, str, n, 0);
             } else
-                send(sock, "0 -1", n, 0);
+            send(sock, "0 -1", n, 0);
         }
         printf("A : %d - B : %d - C : %d - D : %d \n", A, B, C, D);
     }

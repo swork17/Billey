@@ -20,7 +20,6 @@ void show_msg(int type, const char *msg)
         printf(GREEN "%s" RESET, msg);
     
 	printf("\n");
-	exit(0);
 }
 
 void error(const char *msg)

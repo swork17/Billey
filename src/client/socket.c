@@ -11,12 +11,10 @@
 #include "../../include/client.h"
 
 #define ip_server "127.0.0.1"
-// #define ip_server "7.59.36.109"
-
-#define port 4245
+// #define ip_server "37.59.36.109"
 
 // Lance la connexion au serveur
-int connect_server(int i_guichet){
+int connect_server(int i_guichet, int port){
 
   struct sockaddr_in server;
   char message[20] = "2 ";
@@ -67,7 +65,6 @@ char* send_msg(int sock, char* message){
       close(sock);
       show_msg(0, "Pas de réponse du serveur !");
   }
-
 
    return server_reply;
 
