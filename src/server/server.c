@@ -89,8 +89,8 @@ void    *connection_handler(void *socket_desc)
                 send(sock, str, n, 0);
             }
             else {
-                char str[15];
-                snprintf(str, 15, "%d", A);
+                char str[256];
+                snprintf(str, 256, "%d", A);
                 send(sock, strcat("0 ", str), n, 0);
             }
         }
