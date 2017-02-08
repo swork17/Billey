@@ -1,7 +1,6 @@
 
 ********* MEMO *********
-
-port = 4245
+L'adresse cible pour le serveur se situe dans src/client/socket.c
 
 Lancer le Serveur en local
 >./bin/Serveur [port]
@@ -9,8 +8,10 @@ Lancer le Serveur en local
 Lancer le Client
 >./bin/Client [port] [numéro guichet]
 
-******* Message *********
+Lancer les 4 guichets :
+>./init_all.sh [port]
 
+******* Message *********
 Client  : [2:ping] [numéro guichet]
 Serveur : [1] (retour bon) 
 Client  : [Zone] [nombre de place]
