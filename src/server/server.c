@@ -76,29 +76,31 @@ void    *connection_handler(void *socket_desc)
         break;
     }
 
+    char *error = "0 -1";
+    int error_len = strlen(error);
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
         printf("Le guitchet n°%d demande : %s\n", clientInfo->numClient, client_message);
         parsePlaceAttribut(client_message, attribut);
 
         if (attribut->idZone[0] == 'A') {
-            if ((A - attribut->nbPlaces) >= 0){
+            if ((A - attribut->nbPlaces) >= 0) {
                 A -= attribut->nbPlaces;
                 char str[256];
                 sprintf(str, "%d", A);
                 printf("____%s\n", str);
-                send(sock, strcat(str, "gigi"), n, 0);
+                send(sock, str, strlen(str), 0);
             }
             else 
-                send(sock, "0 1", n, 0);
+                send(sock, error, error_len, 0);
         }
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
                 B -= attribut->nbPlaces;
                 char str[256];
                 sprintf(str, "%d", B);
-                send(sock, str, n, 0);
+                send(sock, str, strlen(str), 0);
             } else
-                send(sock, "0 1", n, 0);
+                send(sock, error, error_len, 0);
             
         }
         else if (attribut->idZone[0] == 'C'){
@@ -106,19 +108,19 @@ void    *connection_handler(void *socket_desc)
                 C -= attribut->nbPlaces;
                 char str[256];
                 sprintf(str, "%d", C);
-                send(sock, str, n, 0);
+                send(sock, str, strlen(str), 0);
             } else
-            send(sock, "0 1", n, 0);
+            send(sock, error, error_len, 0);
             
         }
         else if (attribut->idZone[0] == 'D'){
             if ((D - attribut->nbPlaces) >= 0) {
                 D -= attribut->nbPlaces;
                 char str[256];
-                sprintf(str, "%d", C);
-                send(sock, str, n, 0);
+                sprintf(str, "%d", D);
+                send(sock, str, strlen(str), 0);
             } else
-            send(sock, "0 1", n, 0);
+            send(sock, error, error_len, 0);
         }
         printf("A : %d - B : %d - C : %d - D : %d \n", A, B, C, D);
     }
