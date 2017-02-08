@@ -4,6 +4,9 @@ Projet pour NSY103
 Fabien Didier / Kevin Boucher
 
 Usage : 
+======================================
+Start by : ./init_all.sh [port_server]
+======================================
 
 Client  : [2:ping] [numéro guichet]
 
