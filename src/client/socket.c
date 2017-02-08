@@ -10,8 +10,8 @@
 #include "../../include/common.h"
 #include "../../include/client.h"
 
-#define ip_server "127.0.0.1"
-// #define ip_server "37.59.36.109"
+//#define ip_server "127.0.0.1"
+#define ip_server "37.59.36.109"
 
 // Lance la connexion au serveur
 int connect_server(int i_guichet, int port){
@@ -38,6 +38,7 @@ int connect_server(int i_guichet, int port){
   if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
   {
       show_msg(0, "Impossible de se connecter au serveur !");
+      exit(0);
   }
         
   // Envoie des données au serveurs, adresse ip + numéro client

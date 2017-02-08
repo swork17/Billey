@@ -1,31 +1,21 @@
-********* TODO *********
-
-Fabien : réponse du serveur sur le nombre de place
-
-
 
 ********* MEMO *********
 
 port = 4245
 
-Lancer le Serveur
->./bin/Serveur "texte" [port]
+Lancer le Serveur en local
+>./bin/Serveur [port]
 
+Lancer le Client
+>./bin/Client [port] [numéro guichet]
 
 ******* Message *********
 
-
-
 Client  : [2:ping] [numéro guichet]
-Serveur : 0 ou 1 
+Serveur : [1] (retour bon) 
 Client  : [Zone] [nombre de place]
-Serveur : [0] [-1] 
+Serveur : [0] [-1] (plus de place)
 	   ou [nombre de place]
-
-
-Réponse du serveur au client :
-0 : Erreur
-1 : Okay
 
 
 

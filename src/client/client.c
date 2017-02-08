@@ -47,57 +47,60 @@ void init_client(int i_guichet, int port) {
            scanf("%*s"); // Ignore la valeur saisie
          }
 
-       } while ( f_saisie == false );
-       f_saisie = false;
+   } while ( f_saisie == false );
+  
+   f_saisie = false;
 
-      // Dans le cas des supporters locaux, deux zones possibles
-       if (i_categ == 1) {
-        do {
-          printf("Deux zones possibles pour les supporters locaux, zone A ou zone B ? ");
-          scanf(" %c", &c_zone);
-
-          if(c_zone == 'a') c_zone = 'A';
-          if(c_zone == 'b') c_zone = 'B';
-          if(c_zone == 'A' || c_zone == 'B')
-            f_saisie = true;
-          else
-            system("clear");
-        } while (f_saisie == false);
-      }
-
-      if(i_categ == 2) c_zone = 'C';
-      if(i_categ == 3) c_zone = 'D';
-      f_saisie = false;
-
+    // Dans le cas des supporters locaux, deux zones possibles
+    if (i_categ == 1) {
       do {
-        printf("Combien de place souhaitez-vous dans la zone %c ? ", c_zone);
-        scanf("%d", &i_nbplace);
+        printf("Deux zones possibles pour les supporters locaux, zone A ou zone B ? ");
+        scanf(" %c", &c_zone);
 
-        if (i_nbplace > 0)
+        if(c_zone == 'a') c_zone = 'A';
+        if(c_zone == 'b') c_zone = 'B';
+        if(c_zone == 'A' || c_zone == 'B')
           f_saisie = true;
         else
-        {
           system("clear");
-              scanf("%*s"); // Ignore la valeur saisie
-            }
-          } while (f_saisie == false);
+      } while (f_saisie == false);
+    }
 
-          msg[0] = c_zone;  
-          msg[1] = ' ';
-          sprintf(buffer, "%d", i_nbplace);
-          strcat(msg, buffer);
+    if(i_categ == 2) c_zone = 'C';
+    if(i_categ == 3) c_zone = 'D';
+    
+    f_saisie = false;
 
-      // Envoie de la zone et du nombre de place souhaité
-          w_rep_serv = send_msg(socket, msg);
-          w_split_rep_serv = splitIt(w_rep_serv);
-          if(w_split_rep_serv[1] == NULL) w_split_rep_serv[1] = "0";
+    do {
+      printf("Combien de place souhaitez-vous dans la zone %c ? ", c_zone);
+      scanf("%d", &i_nbplace);
 
-          if(strcmp(w_split_rep_serv[1], "-1") != 0) {
-            printf("\nNombre de places restantes : %s\n\n", w_split_rep_serv[0]);
-            show_msg(1, "Commande validée !");
-          }
-          else
-            show_msg(0, "Commande refusé, plus de place disponible dans cette zone !\n");
-      printf("\n");
-      close(socket);
+      if (i_nbplace > 0)
+        f_saisie = true;
+      else
+      {
+        system("clear");
+        scanf("%*s"); // Ignore la valeur saisie
+      } 
+    } while (f_saisie == false);
+
+    msg[0] = c_zone;  
+    msg[1] = ' ';
+    sprintf(buffer, "%d", i_nbplace);
+    strcat(msg, buffer);
+
+    // Envoie de la zone et du nombre de place souhaité
+    w_rep_serv = send_msg(socket, msg);
+    w_split_rep_serv = splitIt(w_rep_serv);
+    if(w_split_rep_serv[1] == NULL) w_split_rep_serv[1] = "0";
+
+    if(strcmp(w_split_rep_serv[1], "-1") != 0) {
+      printf("\nNombre de places restantes : %s\n", w_split_rep_serv[0]);
+      show_msg(1, "Commande validée !");
+    }
+    else
+      show_msg(0, "Commande refusé, plus de place disponible dans cette zone !");
+
+    printf("\nClient suivant !");
+    close(socket);
 }
