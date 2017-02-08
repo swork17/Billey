@@ -68,12 +68,6 @@ char* send_msg(int sock, char* message){
       show_msg(0, "Pas de réponse du serveur !");
   }
 
-  // Erreur si le serveur  retourne 0
-   if(strcmp(server_reply, "0") == 0)
-   {
-      close(sock);
-      show_msg(0, "Impossible serveur occupé !");
-   }
 
    return server_reply;
 

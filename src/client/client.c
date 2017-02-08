@@ -111,8 +111,6 @@ void init_client(int i_guichet){
   sprintf(buffer, "%d", i_nbplace);
   strcat(msg, buffer);
 
-  printf("Message : %s\n", msg);
-
   // Envoie de la zone et du nombre de place souhaité
   w_rep_serv = send_msg(socket, msg);
 
@@ -123,9 +121,9 @@ void init_client(int i_guichet){
 
   if(strcmp(w_split_rep_serv[1], "-1") != 0)
   {
+      printf("Nombre de places restantes : %s\n", w_split_rep_serv[0]);
       show_msg(1, "Commande validée !");
       show_msg(1, " Nombre de places restantes : ");
-      show_msg(1, w_split_rep_serv[0]);
 
   }
   else
