@@ -88,11 +88,8 @@ void    *connection_handler(void *socket_desc)
                 sprintf(str, "%d", A);
                 send(sock, str, n, 0);
             }
-            else {
-                char str[256];
-                snprintf(str, 256, "%d", A);
-                send(sock, strcat("0 ", str), n, 0);
-            }
+            else 
+                send(sock, strcat("0 -1", n, 0);
         }
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
