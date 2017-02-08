@@ -34,9 +34,9 @@ int    run_server(int port)
         perror("bind Error");
         return 1;
     }
-    puts("----> bind OK");
+    puts("--> bind OK");
     listen(socket_desc , 3);
-    puts("---->En attente de connections .. ");
+    puts("-->En attente de connections .. ");
     c = sizeof(struct sockaddr_in);
     while((client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c)))
        {
@@ -50,11 +50,11 @@ int    run_server(int port)
                 perror("Impossible de créer la thread");
                 return 1;
             }
-            puts("----->Handler assigné");
+            puts("-->Handler assigné");
         }
     if (client_sock < 0)
     {
-        perror("accept error");
+        perror("-->accept error");
         return 1;
     }
     return 0;

@@ -130,7 +130,6 @@ void init_client(int i_guichet){
   }
   else
   {
-
       show_msg(0, "Commande refusé, plus de place disponible dans cette zone !\n");
   }
 
