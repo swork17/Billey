@@ -4,7 +4,7 @@ RM	:= rm -rf
 
 LDFLAGS	+= -L. -lpthread -ggdb
 
-CFLAGS	+= -Iinclude  -Wall
+CFLAGS	+= -Iinclude -Wall
 
 SRCS	:=  	main.c \
 				server.c \
