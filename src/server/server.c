@@ -8,10 +8,10 @@
 #include "../../include/server.h"
 #include "../../include/common.h"
 
-int A = 2500;
-int B = 10;
-int C = 5;
-int D = 7;
+int A = 1500;
+int B = 1700;
+int C = 400;
+int D = 300;
 
 
 int    run_server(int port)
@@ -40,7 +40,7 @@ int    run_server(int port)
     c = sizeof(struct sockaddr_in);
     while((client_sock = accept(socket_desc,(struct sockaddr*) &client, (socklen_t*)&c)))
     {
-        puts("Connection OK");
+        puts("\nConnection OK");
         printf("%s\n", inet_ntoa(client.sin_addr));
         pthread_t sniffer_thread;
         new_sock = malloc(1);
@@ -124,7 +124,7 @@ void    *connection_handler(void *socket_desc)
     }
     close(sock);
     if (n == 0)
-        puts("Client Disconnected");
+        puts("Client Disconnected\n");
     else
         perror("recv error");
     return 0;
