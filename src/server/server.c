@@ -86,7 +86,7 @@ void    *connection_handler(void *socket_desc)
                 char str[256];
                 sprintf(str, "%d", A);
                 printf("____%s\n", str);
-                send(sock, str, n, 0);
+                send(sock, strcat(str, "gigi"), n, 0);
             }
             else 
                 send(sock, "0 1", n, 0);
