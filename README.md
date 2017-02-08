@@ -5,7 +5,8 @@ Fabien Didier / Kevin Boucher
 
 Usage : 
 ======================================
-Start by : ./init_all.sh [port_server]
+Start Server : ./bin/Server [port-server]
+Start Client : ./init_all.sh [port_server]
 ======================================
 
 Client  : [2:ping] [numéro guichet]
