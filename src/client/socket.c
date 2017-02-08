@@ -10,8 +10,8 @@
 #include "../../include/common.h"
 #include "../../include/client.h"
 
-//#define ip_server "127.0.0.1"
-#define ip_server "37.59.36.109"
+// #define ip_server "127.0.0.1"   // Appel le serveur en local
+#define ip_server "37.59.36.109"  // Appel le serveur distant
 
 // Lance la connexion au serveur
 int connect_server(int i_guichet, int port){

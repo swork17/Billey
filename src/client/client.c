@@ -35,7 +35,7 @@ void init_client(int i_guichet, int port) {
   do
   {
     print_menu();
-        // Récupération de la saisie et vérification
+    // Récupération de la saisie et vérification
     if (scanf("%d", &i_categ) == 1) {
       if (i_categ > 0 && i_categ < 4)
         f_saisie = true;
@@ -43,11 +43,11 @@ void init_client(int i_guichet, int port) {
         system("clear");
     }
     else {
-     system("clear");
-           scanf("%*s"); // Ignore la valeur saisie
-         }
+      system("clear");
+      scanf("%*s"); // Ignore la valeur saisie
+   }    
 
-   } while ( f_saisie == false );
+ } while ( f_saisie == false );
   
    f_saisie = false;
 
@@ -59,10 +59,13 @@ void init_client(int i_guichet, int port) {
 
         if(c_zone == 'a') c_zone = 'A';
         if(c_zone == 'b') c_zone = 'B';
+
         if(c_zone == 'A' || c_zone == 'B')
           f_saisie = true;
-        else
+        else {
           system("clear");
+          scanf("%*c"); // Ignore la valeur saisie
+        }
       } while (f_saisie == false);
     }
 
@@ -92,7 +95,9 @@ void init_client(int i_guichet, int port) {
     // Envoie de la zone et du nombre de place souhaité
     w_rep_serv = send_msg(socket, msg);
     w_split_rep_serv = splitIt(w_rep_serv);
-    if(w_split_rep_serv[1] == NULL) w_split_rep_serv[1] = "0";
+
+    if(w_split_rep_serv[1] == NULL) 
+      w_split_rep_serv[1] = "0";
 
     if(strcmp(w_split_rep_serv[1], "-1") != 0) {
       printf("\nNombre de places restantes : %s\n", w_split_rep_serv[0]);
@@ -101,6 +106,6 @@ void init_client(int i_guichet, int port) {
     else
       show_msg(0, "Commande refusé, plus de place disponible dans cette zone !");
 
-    printf("\nClient suivant !");
+    printf("\n\n\nClient suivant !\n\n");
     close(socket);
 }
