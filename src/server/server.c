@@ -89,7 +89,7 @@ void    *connection_handler(void *socket_desc)
                 send(sock, str, n, 0);
             }
             else 
-                send(sock, strcat("0 -1", n, 0);
+                send(sock, "0 -1", n, 0);
         }
         else if (attribut->idZone[0] == 'B'){
             if ((B - attribut->nbPlaces) >= 0){
