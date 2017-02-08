@@ -4,7 +4,7 @@ RM	:= rm -rf
 
 LDFLAGS	+= -L. -lpthread -ggdb
 
-CFLAGS	+= -Iinclude -Wimplicit-function-declaration
+CFLAGS	+= -Iinclude  -Wall
 
 SRCS	:=  	main.c \
 				server.c \

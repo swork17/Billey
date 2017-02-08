@@ -77,7 +77,6 @@ void    *connection_handler(void *socket_desc)
     }
 
     while ((n = recv(sock,client_message, 2000, 0)) > 0) {
-        char *ret_msg[256];
         printf("Le guitchet n°%d demande : %s\n", clientInfo->numClient, client_message);
         parsePlaceAttribut(client_message, attribut);
 

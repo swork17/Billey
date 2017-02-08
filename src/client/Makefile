@@ -4,7 +4,7 @@ RM	:= rm -rf
 
 LDFLAGS	+= -L. 
 
-CFLAGS	+= -Iinclude
+CFLAGS	+= -Iinclude -Wall
 
 SRCS	:= 	main.c \
 			client.c \
