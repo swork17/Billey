@@ -87,7 +87,6 @@ void    *connection_handler(void *socket_desc)
                 A -= attribut->nbPlaces;
                 char str[256];
                 sprintf(str, "%d", A);
-                printf("____%s\n", str);
                 send(sock, str, strlen(str), 0);
             }
             else 
