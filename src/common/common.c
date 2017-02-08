@@ -119,7 +119,7 @@ char *append(const char *s, char c) {
 }
 
 char **splitIt(char *string) {
-    int c = 0;
+    int c;
     char **arr = NULL;
 
     c = split(string, ' ', &arr);
